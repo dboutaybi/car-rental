@@ -11,4 +11,5 @@ export default defineConfig({
   datasource: {
     url: process.env["DATABASE_URL"],
   },
+  // Removed custom output for client generator to use default
 });

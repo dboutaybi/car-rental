@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+let prisma: PrismaClient;
+if (!(global as any).prisma) {
+  (global as any).prisma = new PrismaClient();
+}
+prisma = (global as any).prisma;
 
 export async function POST(request: Request) {
   const data = await request.json();
