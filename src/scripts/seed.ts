@@ -18,7 +18,7 @@ async function main() {
   const carCount = await prisma.car.count();
   if (carCount === 0) {
     // Only seed if no cars exist
-    await prisma.car.createMany({
+    const cars = await prisma.car.createMany({
       data: [
         {
           name: 'Toyota Corolla',
@@ -52,7 +52,37 @@ async function main() {
         }
       ]
     });
-    console.log('Database seeded!');
+
+    // Add sample bookings
+    await prisma.booking.createMany({
+      data: [
+        {
+          carId: 1,
+          fullName: 'Alice Smith',
+          email: 'alice@example.com',
+          startDate: new Date('2025-12-10'),
+          endDate: new Date('2025-12-12'),
+          createdAt: new Date('2025-12-01'),
+        },
+        {
+          carId: 2,
+          fullName: 'Bob Johnson',
+          email: 'bob@example.com',
+          startDate: new Date('2025-12-15'),
+          endDate: new Date('2025-12-18'),
+          createdAt: new Date('2025-12-05'),
+        },
+        {
+          carId: 3,
+          fullName: 'Charlie Lee',
+          email: 'charlie@example.com',
+          startDate: new Date('2025-12-20'),
+          endDate: new Date('2025-12-22'),
+          createdAt: new Date('2025-12-10'),
+        }
+      ]
+    });
+    console.log('Database seeded with cars and bookings!');
   } else {
     console.log('Seed skipped: Cars already exist.');
   }
